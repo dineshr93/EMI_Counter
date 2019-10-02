@@ -3,14 +3,19 @@ Dinesh_Car_EMI_Report
 Starts     2019-SEPTEMBER
 Until      2022-SEPTEMBER
 Total EMIs 37
-Completed  2
+Completed  1
+Current    1
 Pending    35
 
 ======================
 Completed Months
 ======================
 1 2019-SEPTEMBER
-2 2019-OCTOBER
+
+======================
+Current Month
+======================
+1 2019-OCTOBER
 
 ======================
 Pending Months

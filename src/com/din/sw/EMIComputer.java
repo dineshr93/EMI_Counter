@@ -17,32 +17,32 @@ import org.apache.commons.io.FileUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
-
-
-
-//https://www.mkyong.com/java/how-to-convert-java-object-to-from-json-jackson/
+//Sample data to check
 // 2015-12 to 2029-12
 //169 Total
 //47 completed
 //122 Pending
 
-//09-19 to 09-22
+//2019-09 to 2022-09
+/*Starts     2019-SEPTEMBER
+Until      2022-SEPTEMBER
+Total EMIs 37
+Completed  1
+Current    1
+Pending    35*/
 
 public class EMIComputer {
 
 	public static void main(String[] args) throws ParseException, IOException { 
 
 		String name = "Dinesh";
-		Purpose purpose = Purpose.Car;
+		Purpose purpose = Purpose.Insurance;
 		YearMonth current = YearMonth.now(ZoneId.of(ZoneOffset.systemDefault().toString()));
 		YearMonth start = YearMonth.parse("2019-09");
 		YearMonth end = YearMonth.parse("2022-09");
 
 
 		LinkedHashMap<YearMonth,Integer> map = new LinkedHashMap<>();
-
-
 		ArrayList<YearMonth> completedList = new ArrayList<YearMonth>();
 		ArrayList<YearMonth> pendingList = new ArrayList<YearMonth>();
 
@@ -54,16 +54,24 @@ public class EMIComputer {
 		}
 
 		int totalEMIs = map.size();
-		int completed = map.get(current); 
-		int pending = totalEMIs - completed;
+		int completed = (map.get(current)-1); 
+		
+		/*for(YearMonth ymentries : map.keySet()) {
+			if(current.)
+		}*/
+		int currentEMI = 0;
+		if(map.get(current)!=null) {
+			currentEMI = 1;
+		}
+		
+		//int current = 1;
+		int pending = totalEMIs - completed -currentEMI ;
 
-
-
-
+		//Calculation start --------------------------------------------
 		//System.out.println("Completed Months");
 		ym = start;
 		count = 0;
-		while(!ym.isAfter(current)) {
+		while(!ym.isAfter(current.minusMonths(1))) {
 			completedList.add(ym);
 			ym = ym.plusMonths( 1 ); 
 		}
@@ -75,7 +83,7 @@ public class EMIComputer {
 			pendingList.add(ym);
 			ym = ym.plusMonths( 1 ); 
 		}
-		
+		//Calculation end----------------------------------------------
 		
 		PrintStream fileOut = new PrintStream(name+"_"+purpose+"_EMI"+".txt");
 		System.setOut(fileOut);
@@ -88,6 +96,7 @@ public class EMIComputer {
 		System.out.println("Until      "+ end.getYear()+"-"+end.getMonth());
 		System.out.println("Total EMIs "+totalEMIs);
 		System.out.println("Completed  "+ completed );
+		System.out.println("Current    "+1);
 		System.out.println("Pending    "+pending);
 		System.out.println();
 		System.out.println("======================");
@@ -96,10 +105,17 @@ public class EMIComputer {
 		printList(completedList);
 		System.out.println();
 		System.out.println("======================");
+		System.out.println("Current Month");
+		System.out.println("======================");
+		System.out.println(currentEMI+" "+ current.getYear()+"-"+current.getMonth());
+		System.out.println();
+		System.out.println("======================");
 		System.out.println("Pending Months");
 		System.out.println("======================");
 		printList(pendingList);
 
+		
+		//Object for json
 		EMIData data = new EMIData();
 		data.setName(name);
 		data.setPurpose(purpose);
@@ -107,10 +123,15 @@ public class EMIComputer {
 		data.setEnd(end);
 		data.setTotalEMIs(totalEMIs);
 		data.setCompleted(completed);
+		data.setCurrentEMI(currentEMI);
 		data.setPending(pending);
 		data.setMap(map);
 		data.setCompletedList(completedList);
 		data.setPendingList(pendingList);
+		
+		
+		
+		//To read and write the data
 		File jsonFile = new File(name+"_"+purpose+"_EMI"+".json");
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.findAndRegisterModules();
@@ -130,6 +151,8 @@ public class EMIComputer {
 			e.printStackTrace();
 			System.out.println("error");
 		}
+		
+		//To open the files
 		Desktop desktop = Desktop.getDesktop();
         if(file.exists()) desktop.open(file);
         if(jsonFile.exists()) desktop.open(jsonFile);
@@ -155,6 +178,7 @@ class EMIData {
 	Purpose purpose;
 	int totalEMIs;
 	int completed; 
+	int currentEMI;
 	int pending;
 	YearMonth start;
 	YearMonth end;
@@ -163,6 +187,12 @@ class EMIData {
 	ArrayList<YearMonth> pendingList;
 	
 	
+	public int getCurrentEMI() {
+		return currentEMI;
+	}
+	public void setCurrentEMI(int currentEMI) {
+		this.currentEMI = currentEMI;
+	}
 	public String getName() {
 		return name;
 	}
