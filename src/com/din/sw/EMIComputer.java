@@ -36,7 +36,7 @@ public class EMIComputer {
 	public static void main(String[] args) throws ParseException, IOException { 
 
 		String name = "Dinesh";
-		Purpose purpose = Purpose.Insurance;
+		Purpose purpose = Purpose.Car;
 		YearMonth current = YearMonth.now(ZoneId.of(ZoneOffset.systemDefault().toString()));
 		YearMonth start = YearMonth.parse("2015-12");
 		YearMonth end = YearMonth.parse("2029-12");
@@ -84,10 +84,10 @@ public class EMIComputer {
 			ym = ym.plusMonths( 1 ); 
 		}
 		//Calculation end----------------------------------------------
-		
-		PrintStream fileOut = new PrintStream(name+"_"+purpose+"_EMI"+".txt");
+		File file = new File("output\\"+name+"_"+purpose+"_EMI"+".txt");
+		PrintStream fileOut = new PrintStream(file);
 		System.setOut(fileOut);
-		File file = new File(name+"_"+purpose+"_EMI"+".txt");
+		
 
 
 		System.out.println(name+"_"+purpose+"_"+"EMI_Report");
@@ -95,6 +95,7 @@ public class EMIComputer {
 		System.out.println("Starts     "+ start.getYear()+"-"+start.getMonth());
 		System.out.println("Until      "+ end.getYear()+"-"+end.getMonth());
 		System.out.println("Total EMIs "+totalEMIs);
+		System.out.println();
 		System.out.println("Completed  "+ completed );
 		System.out.println("Current    "+1);
 		System.out.println("Pending    "+pending);
@@ -132,7 +133,7 @@ public class EMIComputer {
 		
 		
 		//To read and write the data
-		File jsonFile = new File(name+"_"+purpose+"_EMI"+".json");
+		File jsonFile = new File("output\\"+name+"_"+purpose+"_EMI"+".json");
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.findAndRegisterModules();
 		try {
