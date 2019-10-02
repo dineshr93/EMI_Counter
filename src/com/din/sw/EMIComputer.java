@@ -38,8 +38,8 @@ public class EMIComputer {
 		String name = "Dinesh";
 		Purpose purpose = Purpose.Car;
 		YearMonth current = YearMonth.now(ZoneId.of(ZoneOffset.systemDefault().toString()));
-		YearMonth start = YearMonth.parse("2015-12");
-		YearMonth end = YearMonth.parse("2029-12");
+		YearMonth start = YearMonth.parse("2019-09");
+		YearMonth end = YearMonth.parse("2022-09");
 
 
 		LinkedHashMap<YearMonth,Integer> map = new LinkedHashMap<>();
