@@ -8,3 +8,7 @@ OUTPUT1:
 OUTPUT2:
 [TXT](https://github.com/dineshr93/EMI_Counter/blob/master/output/Dinesh_Insurance_EMI.txt) , 
 [JSON](https://github.com/dineshr93/EMI_Counter/blob/master/output/Dinesh_Insurance_EMI.json)
+
+
+Project has [libraries](https://github.com/dineshr93/EMI_Counter/blob/master/lib/) that has its respective Copyrights and 
+[Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0)
